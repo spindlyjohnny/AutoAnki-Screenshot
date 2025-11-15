@@ -48,12 +48,14 @@ def AutoScreenshot():
         if fields == None:
             return
         else:
-            haspic = fields['Picture']
+            #haspic = fields['Picture']
+            haspic = fields[savedata['field']]
             if haspic['value'] != '':
                 return
             else:
                 filename = "".join(random.choices(string.ascii_uppercase + string.digits, k=16)) + ".png"
                 path = rf"C:\Users\saifu\AppData\Roaming\Anki2\User 1\collection.media\{filename}"
+                #path = savedata['path'] + filename
                 pyautogui.screenshot(path)
                 invoke("storeMediaFile",filename = filename,path = path)
                 invoke("updateNoteFields", note={
@@ -64,4 +66,4 @@ def AutoScreenshot():
                 })
     else:
         return
-#AutoScreenshot()
+AutoScreenshot()
