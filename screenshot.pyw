@@ -26,8 +26,20 @@ def getfields(ID):
     else:
         index = yomitanIDs.index(ID)
         return invoke("notesInfo",notes = yomitanIDs)[index]['fields']
-
-yomitanIDs = invoke('findNotes',query = "deck:"+[str(i) for i in invoke("deckNamesAndIds").keys()][-1]) #card IDs
+savedata = {"deck" : "","field" : "","path" : ""}
+try:
+    data = open("savedata.json")
+except:
+    savedata["deck"] = input("Which deck to modify?")
+    savedata["field"] = input("Which field to modify?")
+    savedata["path"] = input("Where to store screenshots?")
+    with open("savedata.json", mode="w", encoding="utf-8") as data:
+         json.dump(savedata, data)
+if data != None:
+    data = open("savedata.json")
+    savedata = json.load(data)
+    data.close()
+yomitanIDs = invoke('findNotes',query = "deck:"+ savedata["deck"])
 #sentencequery = invoke('findNotes',query = 'sentence:*' + pyperclip.paste() + "*")
 wordquery = invoke('findNotes',query = 'word:*' + pyperclip.paste() + "*")
 def AutoScreenshot():
@@ -52,4 +64,4 @@ def AutoScreenshot():
                 })
     else:
         return
-AutoScreenshot()
+#AutoScreenshot()
