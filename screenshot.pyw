@@ -41,10 +41,10 @@ if data != None:
     data.close()
 yomitanIDs = invoke('findNotes',query = "deck:"+ savedata["deck"])
 #sentencequery = invoke('findNotes',query = 'sentence:*' + pyperclip.paste() + "*")
-wordquery = invoke('findNotes',query = 'word:*' + pyperclip.paste() + "*")
+wordquery = invoke("findNotes",query = "added:1")[-1]#invoke('findNotes',query = 'word:*' + pyperclip.paste() + "*")
 def AutoScreenshot():
-    if len(wordquery) > 0:
-        fields = getfields(wordquery[0])#['Picture']
+    if wordquery != None:
+        fields = getfields(wordquery)#['Picture']
         if fields == None:
             return
         else:
@@ -59,7 +59,7 @@ def AutoScreenshot():
                 pyautogui.screenshot(path)
                 invoke("storeMediaFile",filename = filename,path = path)
                 invoke("updateNoteFields", note={
-                    "id": wordquery[0],
+                    "id": wordquery,
                     "fields": {
                     "Picture": f'<img src="{filename}">'
                     }
