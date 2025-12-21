@@ -41,7 +41,11 @@ if data != None:
     data.close()
 yomitanIDs = invoke('findNotes',query = "deck:"+ savedata["deck"])
 #sentencequery = invoke('findNotes',query = 'sentence:*' + pyperclip.paste() + "*")
-wordquery = invoke("findNotes",query = "added:1")[-1] if len(invoke("findNotes",query = "added:1")) > 0 else None#invoke('findNotes',query = 'word:*' + pyperclip.paste() + "*")
+if pyperclip.paste() != "":
+    wordquery = invoke('findNotes',query = 'word:*' + pyperclip.paste() + "*")[0]
+elif pyperclip.paste() == "" and len(invoke("findNotes",query = "added:1")) > 0:
+    wordquery = invoke("findNotes",query = "added:1")[-1]
+#wordquery = invoke("findNotes",query = "added:1")[-1] if len(invoke("findNotes",query = "added:1")) > 0 else None#invoke('findNotes',query = 'word:*' + pyperclip.paste() + "*")
 def AutoScreenshot():
     if wordquery != None:
         fields = getfields(wordquery)#['Picture']
@@ -64,6 +68,8 @@ def AutoScreenshot():
                     "Picture": f'<img src="{filename}">'
                     }
                 })
+                if pyperclip.paste() != "":
+                    pyperclip.copy("")
     else:
         return
 AutoScreenshot()
