@@ -45,6 +45,8 @@ if pyperclip.paste() != "":
     wordquery = invoke('findNotes',query = 'word:*' + pyperclip.paste() + "*")[0]
 elif pyperclip.paste() == "" and len(invoke("findNotes",query = "added:1")) > 0:
     wordquery = invoke("findNotes",query = "added:1")[-1]
+else:
+    wordquery = None
 #wordquery = invoke("findNotes",query = "added:1")[-1] if len(invoke("findNotes",query = "added:1")) > 0 else None#invoke('findNotes',query = 'word:*' + pyperclip.paste() + "*")
 def AutoScreenshot():
     if wordquery != None:
