@@ -4,6 +4,9 @@ import pyperclip
 import pyautogui
 import random
 import string
+import tkinter as tk
+from tkinter import messagebox
+from tkinter import filedialog
 def request(action, **params):
     return {'action': action, 'params': params, 'version': 6}
 
@@ -32,7 +35,7 @@ try:
 except:
     savedata["deck"] = input("Which deck to modify?")
     savedata["field"] = input("Which field to modify?")
-    savedata["path"] = input("Where to store screenshots?")
+    savedata["path"] = filedialog.askdirectory()
     with open("savedata.json", mode="w", encoding="utf-8") as data:
          json.dump(savedata, data)
 if data != None:
@@ -41,7 +44,7 @@ if data != None:
     data.close()
 yomitanIDs = invoke('findNotes',query = "deck:"+ savedata["deck"])
 #sentencequery = invoke('findNotes',query = 'sentence:*' + pyperclip.paste() + "*")
-if pyperclip.paste() != "":
+if pyperclip.paste() != "" and len(invoke('findNotes',query = 'word:*' + pyperclip.paste() + "*")) > 0:
     wordquery = invoke('findNotes',query = 'word:*' + pyperclip.paste() + "*")[0]
 elif pyperclip.paste() == "" and len(invoke("findNotes",query = "added:1")) > 0:
     wordquery = invoke("findNotes",query = "added:1")[-1]
@@ -60,8 +63,8 @@ def AutoScreenshot():
                 return
             else:
                 filename = "".join(random.choices(string.ascii_uppercase + string.digits, k=16)) + ".png"
-                path = rf"C:\Users\saifu\AppData\Roaming\Anki2\User 1\collection.media\{filename}"
-                #path = savedata['path'] + filename
+                #path = rf"C:\Users\saifu\AppData\Roaming\Anki2\User 1\collection.media\{filename}"
+                path = savedata['path'] + filename
                 pyautogui.screenshot(path)
                 invoke("storeMediaFile",filename = filename,path = path)
                 invoke("updateNoteFields", note={
