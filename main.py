@@ -18,11 +18,14 @@ def invoke(action, **params):
     if response['error'] is not None:
         raise Exception(response['error'])
     return response['result']
-
 savedata = {"deck" : "","field" : "","path" : ""}
 try:
     data = open("savedata.json")
 except:
+    print("Thank you for using this tool. \n" \
+    "Ctrl + P to take screenshot. This will add the screenshot to your most recently added card. \n" \
+    "If you want to add a picture to an existing card, clear your clipboard and copy the word in question first before pressing Ctrl + P. \n" \
+    "Alt + P to add a limit to how many new cards you can add for the day.")
     savedata["deck"] = input("Which deck to modify?")
     savedata["field"] = input("Which field to modify?")
     print("Where to store media?")
