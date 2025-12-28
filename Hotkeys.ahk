@@ -1,7 +1,8 @@
 ﻿!p::Run "C:\Users\saifu\OneDrive\Desktop\AutoAnki Screenshot\cardlimit.py"
 ^p::{
     Run "C:\Users\saifu\OneDrive\\Desktop\AutoAnki Screenshot\screenshot.pyw"
-    Run "C:\Users\saifu\OneDrive\\Desktop\AutoAnki Screenshot\main.py"
+    if !FileExist("C:\Users\saifu\OneDrive\Desktop\AutoAnki Screenshot\savedata.json")
+        Run "C:\Users\saifu\OneDrive\\Desktop\AutoAnki Screenshot\main.py"
     return
 }
 ^+a::{
