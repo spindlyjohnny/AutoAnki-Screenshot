@@ -12,10 +12,14 @@ def getfields(ID):
 yomitanIDs = sv.invoke('findNotes',query = "deck:"+ sv.savedata["deck"])
 #sentencequery = invoke('findNotes',query = 'sentence:*' + pyperclip.paste() + "*")
 if type(pyperclip.paste()) == str:    
-    if pyperclip.paste() != "" and len(sv.invoke('findNotes',query = 'word:*' + pyperclip.paste() + "*")) > 0:
-        wordquery = sv.invoke('findNotes',query = 'word:*' + pyperclip.paste() + "*")[0]
-    elif pyperclip.paste() == "" and len(sv.invoke("findNotes",query = "added:1")) > 0:
+    if pyperclip.paste() == "" and len(sv.invoke("findNotes",query = "added:1")) > 0:
         wordquery = sv.invoke("findNotes",query = "added:1")[-1]
+    elif pyperclip.paste() != "":
+        if len(sv.invoke('findNotes',query = 'word:*' + pyperclip.paste() + "*")) > 0:
+            wordquery = sv.invoke('findNotes',query = 'word:*' + pyperclip.paste() + "*")[0]
+        else:
+            pyperclip.copy("")
+            wordquery = None
 else:
     wordquery = None
 #wordquery = invoke("findNotes",query = "added:1")[-1] if len(invoke("findNotes",query = "added:1")) > 0 else None#invoke('findNotes',query = 'word:*' + pyperclip.paste() + "*")
